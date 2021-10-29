@@ -7,7 +7,7 @@ RUN mkdir /usr/app
 COPY . /usr/app
 
 WORKDIR /usr
-RUN git clone https://c4b84afaee4a53e1fe6fa6186a10c9afa5aa4320:x-oauth-basic@github.com/LimeTray/tl-python-sdk.git
+RUN git clone https://github.com/raghavtan/tl-python-sdk.git
 
 WORKDIR /usr/tl-python-sdk
 
