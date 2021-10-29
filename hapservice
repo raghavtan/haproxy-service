@@ -1,0 +1,94 @@
+#!/bin/bash
+
+LOG_FILE="/var/log/haproxyservice-nohup.log"
+PID_FILE="/var/run/haproxyservice.pid"
+APP_DIR="/home/ratikesh/haproxy-service"
+ENV_VARS="/root/.bash_profile"
+BIN_FILE="/usr/bin/hapservice"
+
+export PYTHONUNBUFFERED=1
+
+readonly PROGNAME=$(basename $0)
+
+start_service(){
+    if [[ -e ${PID_FILE} ]]; then
+        echo "PID FILE exists removing old PID file"
+        rm -rf  ${PID_FILE}
+    else
+        echo "Application pid doesnt exist"
+    fi
+    source ${ENV_VARS}
+    nohup python3 ${APP_DIR}/main.py > ${LOG_FILE} &
+    echo "$!" > ${PID_FILE}
+
+}
+
+stop_service(){
+    if [[ -e ${PID_FILE} ]]; then
+        echo "PID FILE exists killing process"
+        PID=`cat ${PID_FILE}`
+        kill -9 ${PID}
+        rm -rf  ${PID_FILE}
+    else
+        echo "Application pid doesnt exist"
+    fi
+}
+
+restart_service(){
+    stop_service
+    sleep 2
+    start_service
+}
+
+setup_service(){
+    if [[ -e ${BIN_FILE} ]]; then
+        echo "Application Already Setup"
+    else
+        echo "Application Setup Start"
+        rm -rf  ${BIN_FILE}
+        chmod 777 ${APP_DIR}/hapservice
+        ln -s ${APP_DIR}/hapservice ${BIN_FILE}
+        echo "Application Setup Done ...."
+        echo "$usage"
+    fi
+}
+
+# USAGE Definations
+usage="${PROGNAME}
+
+where:
+    -h, --help                             Show this help text
+
+    ------------------------------------------------------------------------------
+    Specifications
+    ------------------------------------------------------------------------------
+    hapservice {start,stop,restart,setup}
+
+    "
+###
+
+
+if [[ $# -eq 0 ]]; then
+	echo "$usage"
+	exit 1
+fi
+
+case ${1} in
+start)
+  start_service
+  ;;
+stop)
+    stop_service
+  ;;
+restart)
+  restart_service
+  ;;
+setup)
+  setup_service
+  ;;
+*)
+  echo "Invalid command"
+  echo "$usage"
+  exit 1
+  ;;
+esac
