@@ -2,7 +2,7 @@
 
 ### Setup Application
 ```
-git clone git@github.com:LimeTray/haproxy-service.git
+git clone git@github.com:raghavtan/haproxy-service.git
 git checkout develop
 cd haproxy-service
 ./hapservice setup
