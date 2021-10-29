@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-transportlayer = {editable = true,git = "ssh://git@github.com/LimeTray/tl-python-sdk.git",ref = "master"}
+transportlayer = {editable = true,git = "ssh://git@github.com/raghavtan/tl-python-sdk.git",ref = "master"}
 boto3 = "==1.4.4"
 aiohttp = "==1.3.3"
 bunyan = "==0.1.2"
