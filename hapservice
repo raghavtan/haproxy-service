@@ -2,7 +2,7 @@
 
 LOG_FILE="/var/log/haproxyservice-nohup.log"
 PID_FILE="/var/run/haproxyservice.pid"
-APP_DIR="/home/ratikesh/haproxy-service"
+APP_DIR="/home/haproxy-service"
 ENV_VARS="/root/.bash_profile"
 BIN_FILE="/usr/bin/hapservice"
 
